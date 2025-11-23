@@ -1,9 +1,12 @@
 package deathbyquestion;
 
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -17,36 +20,46 @@ public class MainMenuScene {
     }
 
     private Scene createScene() {
-        VBox layout = new VBox(20);
-        layout.getStyleClass().add("menu-background");
-        layout.setAlignment(Pos.CENTER);
-        
-        Label title = new Label("DEATH BY QUESTION");
-        title.getStyleClass().add("game-title");
-        
+
+        VBox mainLayout = new VBox(30);
+        mainLayout.setAlignment(Pos.CENTER);
+        mainLayout.setPadding(new Insets(40));
+        mainLayout.getStyleClass().add("menu-background");
+
+        // Logo
+        ImageView logo = new ImageView(
+                new Image(getClass().getResource("logo.png").toExternalForm())
+        );
+        logo.setFitWidth(300);
+        logo.setPreserveRatio(true);
+
+        // Buttons
         Button startButton = new Button("Start Game");
-        startButton.getStyleClass().add("game-button");
+        Button achievementButton = new Button("Achievement");
         Button exitButton = new Button("Exit");
+
+        startButton.getStyleClass().add("game-button");
+        achievementButton.getStyleClass().add("game-button");
         exitButton.getStyleClass().add("game-button");
 
-        // Tombol Start → masuk ke QuizScene
         startButton.setOnAction(e -> {
             QuizScene quizScene = new QuizScene(stage);
             stage.setScene(quizScene.getScene());
         });
 
-        // Tombol Exit → keluar aplikasi
-        exitButton.setOnAction(e -> {
-            stage.close();
-        });
+        exitButton.setOnAction(e -> stage.close());
 
-        layout.getChildren().addAll(title, startButton, exitButton);
+        mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton);
 
-        return new Scene(layout, 400, 300);
+        StackPane root = new StackPane(mainLayout);
+
+        Scene scene = new Scene(root, 1000, 600);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+        return scene;
     }
 
     public Scene getScene() {
-    	scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        return scene;
+        return this.scene;
     }
 }

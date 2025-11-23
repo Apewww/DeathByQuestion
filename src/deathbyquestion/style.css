@@ -1,0 +1,39 @@
+.menu-background {
+    -fx-background-image: url("background.png");
+    -fx-background-size: cover;       /* agar full layar */
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.game-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.3, 0, 3);
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+.game-title:hover {
+	-fx-text-fill: linear-gradient(#4ca0d4, #2a7eb3);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
+}
+
+.game-button {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15px;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-background-color: linear-gradient(#3c8dbc, #1c6692);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.3, 0, 3);
+}
+
+/* Style saat hover */
+.game-button:hover {
+    -fx-background-color: linear-gradient(#4ca0d4, #2a7eb3);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}

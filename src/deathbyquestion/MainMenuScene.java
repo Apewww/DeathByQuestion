@@ -28,7 +28,7 @@ public class MainMenuScene {
 
         // Logo
         ImageView logo = new ImageView(
-                new Image(getClass().getResource("logo.png").toExternalForm())
+                new Image(getClass().getResource("/assets/img/logo.png").toExternalForm())
         );
         logo.setFitWidth(300);
         logo.setPreserveRatio(true);
@@ -54,7 +54,7 @@ public class MainMenuScene {
         StackPane root = new StackPane(mainLayout);
 
         Scene scene = new Scene(root, 1000, 600);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/assets/css/style.css").toExternalForm());
 
         return scene;
     }

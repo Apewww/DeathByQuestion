@@ -17,17 +17,33 @@ public class QuizScene {
     private int currentQuestionIndex = 0;
     private int score = 0;
     private List<Question> questions;
-
+    private LifeSystem lifeSystem;
+    private Label lifeLabel;
+    
+    
     public QuizScene(Stage stage) {
         this.stage = stage;
         this.questions = QuestionData.getQuestions();
+        
+        lifeSystem = new LifeSystem(3);
+        lifeLabel = new Label("Life : " + lifeSystem.getLife());
+        lifeLabel.getStyleClass().add("life-label");
+        
         this.scene = createScene();
     }
+    
+
+
 
     private Scene createScene() {
         VBox layout = new VBox(15);
         layout.setAlignment(Pos.CENTER);
 
+        VBox topHUD = new VBox(lifeLabel);
+        topHUD.setAlignment(Pos.TOP_CENTER);
+
+        layout.getChildren().add(topHUD);
+        
         Label questionLabel = new Label();
         ToggleGroup group = new ToggleGroup();
         RadioButton[] options = new RadioButton[4];
@@ -47,6 +63,17 @@ public class QuizScene {
 
                 if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
                     score++;
+                } else {
+                	lifeSystem.loseLife(1);
+                    lifeLabel.setText("Life : " + lifeSystem.getLife());
+
+                    if (lifeSystem.isDead()) {
+                        // pindah ke Result / Game Over Scene
+                        //ResultScene result = new ResultScene(stage, score);
+                        //stage.setScene(result.getScene());
+                    	System.out.println("Died!!");
+                        return;
+                    }
                 }
 
                 currentQuestionIndex++;

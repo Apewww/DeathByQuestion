@@ -42,7 +42,7 @@ public class MainMenuScene {
         startButton.getStyleClass().add("game-button");
         achievementButton.setPrefSize(150, 40);
         achievementButton.getStyleClass().add("achievement-button");
-        exitButton.setPrefSize(90, 20);
+        exitButton.setPrefSize(80, 20);
         exitButton.getStyleClass().add("exit-button");
 
         startButton.setOnAction(e -> {

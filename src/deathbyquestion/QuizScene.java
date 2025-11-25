@@ -143,14 +143,12 @@ public class QuizScene {
         return scene;
     }
 
-    // ----------------------------------------------------------
-    // ADDED → Fungsi untuk update tampilan hati
-    // ----------------------------------------------------------
+    // nyawa
     private void updateHearts() {
         heartBox.getChildren().clear();
         for (int i = 0; i < lifeSystem.getLife(); i++) {
             ImageView heart = new ImageView(new Image(
-                    getClass().getResource("/assets/img/heart.png").toExternalForm()
+                    getClass().getResource("/assets/img/nyawa.png").toExternalForm()
             ));
             heart.setFitWidth(35);
             heart.setPreserveRatio(true);

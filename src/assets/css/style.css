@@ -31,7 +31,7 @@
 
 /* Style saat hover */
 .game-button:hover {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
@@ -48,7 +48,7 @@
 
 /* Style saat hover */
 .achievement-button:hover {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
@@ -65,7 +65,7 @@
 
 /* Style saat hover */
 .exit-button:hover {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
@@ -147,22 +147,3 @@
 .next-button:hover {
     -fx-background-color: #f2f2f2;
 }
-
-/* ===========================================================
-   EXIT BUTTON (kecil di bawah)
-   =========================================================== */
-.exit-button {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: black;
-    -fx-background-color: transparent;
-    -fx-font-family: "Arial";
-}
-
-.exit-button:hover {
-    -fx-text-fill: #444;
-}
-
-/* ===========================================================
-   HEART ICONS (tidak perlu CSS khusus, pakai gambar PNG)
-   =========================================================== */

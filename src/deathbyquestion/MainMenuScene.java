@@ -28,19 +28,22 @@ public class MainMenuScene {
 
         // Logo
         ImageView logo = new ImageView(
-                new Image(getClass().getResource("/assets/img/logo.png").toExternalForm())
+                new Image(getClass().getResource("/assets/img/logonew.png").toExternalForm())
         );
-        logo.setFitWidth(300);
+        logo.setFitWidth(500);
         logo.setPreserveRatio(true);
 
         // Buttons
-        Button startButton = new Button("Start Game");
-        Button achievementButton = new Button("Achievement");
-        Button exitButton = new Button("Exit");
+        Button startButton = new Button("");
+        Button achievementButton = new Button("	");
+        Button exitButton = new Button("");
 
+        startButton.setPrefSize(250, 60);
         startButton.getStyleClass().add("game-button");
-        achievementButton.getStyleClass().add("game-button");
-        exitButton.getStyleClass().add("game-button");
+        achievementButton.setPrefSize(150, 40);
+        achievementButton.getStyleClass().add("achievement-button");
+        exitButton.setPrefSize(90, 20);
+        exitButton.getStyleClass().add("exit-button");
 
         startButton.setOnAction(e -> {
             QuizScene quizScene = new QuizScene(stage);

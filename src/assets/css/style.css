@@ -1,3 +1,5 @@
+
+/*MainMenuScene*/
 .menu-background {
     -fx-background-image: url("../img/background.png");
     -fx-background-size: cover;       /* agar full layar */
@@ -18,22 +20,149 @@
 	-fx-text-fill: linear-gradient(#4ca0d4, #2a7eb3);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
 }
-
+/*start game button*/
 .game-button {
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 15px;
-    -fx-text-fill: white;
-    -fx-padding: 10px 20px;
-    -fx-background-color: linear-gradient(#3c8dbc, #1c6692);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.3, 0, 3);
+    -fx-background-color: transparent;
+    -fx-background-image: url("../img/startgamenew.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 /* Style saat hover */
 .game-button:hover {
-    -fx-background-color: linear-gradient(#4ca0d4, #2a7eb3);
+    -fx-background-color: black;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
     -fx-cursor: hand;
 }
+/*achievement game button*/
+.achievement-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../img/achievement.png");
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+/* Style saat hover */
+.achievement-button:hover {
+    -fx-background-color: black;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+/*exit game button*/
+.exit-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../img/exit.png");
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+/* Style saat hover */
+.exit-button:hover {
+    -fx-background-color: black;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+/*-------------------------------------------------------------------*/
+
+/* ===========================================================
+   BACKGROUND QUIZ SCENE
+   =========================================================== */
+.quiz-background {
+    -fx-background-color: #8bb0c9; /* Biru lembut sesuai gambar */
+    -fx-padding: 30;
+}
+
+/* ===========================================================
+   LEVEL LABEL
+   =========================================================== */
+.level-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+    -fx-font-family: "Arial";
+}
+
+/* ===========================================================
+   PERTANYAAN
+   =========================================================== */
+.question-text {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-font-family: "Arial";
+}
+
+/* ===========================================================
+   JAWABAN (RadioButton tapi gaya seperti tombol)
+   =========================================================== */
+.answer-button {
+    -fx-background-color: white;
+    -fx-padding: 10 20;
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial";
+}
+
+.answer-button:hover {
+    -fx-background-color: #e5e5e5;
+}
+
+/* menghilangkan bulatan radio default */
+.radio-button > .radio {
+    -fx-opacity: 0;
+}
+
+/* ===========================================================
+   NEXT BUTTON
+   =========================================================== */
+.next-button {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-padding: 8 20;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+}
+
+.next-button:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+/* ===========================================================
+   EXIT BUTTON (kecil di bawah)
+   =========================================================== */
+.exit-button {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";
+}
+
+.exit-button:hover {
+    -fx-text-fill: #444;
+}
+
+/* ===========================================================
+   HEART ICONS (tidak perlu CSS khusus, pakai gambar PNG)
+   =========================================================== */

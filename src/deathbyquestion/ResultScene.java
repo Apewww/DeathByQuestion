@@ -15,10 +15,10 @@ public class ResultScene {
         layout.setAlignment(Pos.CENTER);
 
         Label result = new Label("Skor kamu: " + score + " dari " + quizsize);
-        Button restart = new Button("Main lagi");
+        Button restart = new Button("Main Menu");
         restart.setOnAction(e -> {
-            QuizScene quiz = new QuizScene(stage);
-            stage.setScene(quiz.getScene());
+        	MainMenuScene MainMenu = new MainMenuScene(stage);
+            stage.setScene(MainMenu.getScene());
         });
 
         layout.getChildren().addAll(result, restart);

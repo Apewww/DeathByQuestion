@@ -9,10 +9,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region; // Diperlukan untuk space lines
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+import java.net.URL; // Diperlukan untuk pengecekan resource
 import java.util.List;
 
 public class QuizScene {
@@ -41,22 +44,31 @@ public class QuizScene {
         ImageView logoView = new ImageView(new Image(
                 getClass().getResource("/assets/img/logo.png").toExternalForm()
         ));
-        logoView.setFitWidth(150); // ukuran kecil
+        logoView.setFitWidth(150);
         logoView.setPreserveRatio(true);
 
+        // **PERUBAHAN 1: HBox untuk heartBox dibuat lebih lebar**
         heartBox = new HBox(5);
-        heartBox.setAlignment(Pos.CENTER);
+        heartBox.setAlignment(Pos.CENTER_RIGHT);
+        heartBox.setMinWidth(120); // Beri lebar minimal agar layout tidak bergeser
         updateHearts();
 
-        HBox topHUD = new HBox(100, levelLabel, logoView, heartBox);
-        topHUD.setAlignment(Pos.CENTER);
+        // Gunakan Region sebagai 'Spacer' untuk responsif
+        Region spacerLeft = new Region();
+        HBox.setHgrow(spacerLeft, Priority.ALWAYS);
+        Region spacerRight = new Region();
+        HBox.setHgrow(spacerRight, Priority.ALWAYS);
+
+        // HBox dengan spacer agar levelLabel di kiri dan heartBox di kanan
+        HBox topHUD = new HBox(10, levelLabel, spacerLeft, logoView, spacerRight, heartBox);
+        topHUD.setAlignment(Pos.CENTER_LEFT);
+        topHUD.setPadding(new Insets(20, 30, 0, 30)); // Tambahkan padding untuk estetika
 
         /*Layout Utama*/
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(0));
         layout.getStyleClass().add("quiz-background");
-
 
         /*Question*/
         Label questionLabel = new Label();
@@ -67,25 +79,41 @@ public class QuizScene {
         RadioButton[] options = new RadioButton[4];
 
         for (int i = 0; i < 4; i++) {
+            final int index = i; // Variabel 'index' adalah effectively final
             options[i] = new RadioButton();
             options[i].setToggleGroup(group);
             options[i].getStyleClass().add("answer-button");
+            
+            // **PERUBAHAN 2: Tambahkan listener untuk perubahan warna opsi yang dipilih**
+            options[i].selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                
+                // Hapus kelas CSS dari semua opsi (untuk menghapus warna hijau opsi sebelumnya)
+                // Hapus kelas CSS ini dulu, karena Anda ingin hanya satu yang hijau
+                for (RadioButton rb : options) {
+                    rb.getStyleClass().remove("answer-selected");
+                }
+                
+                // Tambahkan kelas CSS ke opsi yang baru dipilih
+                if (isSelected) {
+                    options[index].getStyleClass().add("answer-selected"); // <<< GANTI i menjadi index
+                }
+            });
         }
 
-        /*option grid 3x2*/
-     VBox col1 = new VBox(20, options[0], options[2]);
-     col1.setAlignment(Pos.CENTER_RIGHT);
+        /*option grid 3x2 - Dibuat lebih responsif*/
+        VBox col1 = new VBox(20, options[0], options[2]);
+        HBox.setHgrow(col1, Priority.ALWAYS);
+        col1.setAlignment(Pos.CENTER_RIGHT);
 
-     VBox col2 = new VBox();
-     col2.setMinWidth(5);   
-     col2.setAlignment(Pos.CENTER);
+        VBox col2 = new VBox(20, options[1], options[3]);
+        HBox.setHgrow(col2, Priority.ALWAYS);
+        col2.setAlignment(Pos.CENTER_LEFT);
 
-     VBox col3 = new VBox(20, options[1], options[3]);
-     col3.setAlignment(Pos.CENTER_LEFT);
-
-     // Grid 3 kolom
-     HBox optionsGrid = new HBox(10, col1, col2, col3);
-     optionsGrid.setAlignment(Pos.CENTER);
+        // Grid 2 kolom utama
+        HBox optionsGrid = new HBox(50, col1, col2);
+        HBox.setHgrow(optionsGrid, Priority.ALWAYS);
+        optionsGrid.setAlignment(Pos.CENTER);
+        optionsGrid.setPadding(new Insets(0, 50, 0, 50));
 
         /*next*/
         Button nextButton = new Button("Next");
@@ -98,6 +126,9 @@ public class QuizScene {
                 for (int i = 0; i < 4; i++) {
                     if (options[i] == selected) selectedIndex = i;
                 }
+                
+                // Hapus warna hijau setelah tombol Next ditekan
+                selected.getStyleClass().remove("answer-selected");
 
                 if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
                     score++;
@@ -107,6 +138,7 @@ public class QuizScene {
 
                     if (lifeSystem.isDead()) {
                         System.out.println("Game Over!");
+                        // Tambahkan navigasi ke Game Over Scene di sini
                         return;
                     }
                 }
@@ -126,14 +158,15 @@ public class QuizScene {
 
         /*exit*/
         Button exitButton = new Button("Exit");
+        exitButton.setPrefSize(80, 30);
         exitButton.getStyleClass().add("exit-button");
         exitButton.setOnAction(e -> stage.close());
 
         /*space lines*/
-        VBox.setMargin(topHUD, new Insets(0, 0, 60, 0));          // jarak HUD → pertanyaan
-        VBox.setMargin(questionLabel, new Insets(0, 0, 35, 0));   // jarak pertanyaan → jawaban
-        VBox.setMargin(optionsGrid, new Insets(0, 0, 30, 0));     // jarak jawaban → next
-        VBox.setMargin(nextButton, new Insets(0, 0, 20, 0));      // jarak next → exit
+        VBox.setMargin(topHUD, new Insets(0)); // Hapus margin di sini karena padding sudah ada di topHUD
+        VBox.setMargin(questionLabel, new Insets(0, 0, 50, 0)); // Tambahkan margin atas untuk pertanyaan
+        VBox.setMargin(optionsGrid, new Insets(0, 0, 20, 0));
+        VBox.setMargin(nextButton, new Insets(0, 0, 20, 0));
 
         /*tambah ke layout*/
         layout.getChildren().addAll(
@@ -157,10 +190,20 @@ public class QuizScene {
     /*heart*/
     private void updateHearts() {
         heartBox.getChildren().clear();
+        String resourcePath = "/assets/img/nyawa.png";
+        URL resourceUrl = getClass().getResource(resourcePath);
+
+        if (resourceUrl == null) {
+            // Ini untuk menangani NullPointerException yang terjadi sebelumnya
+            System.err.println("Gagal memuat nyawa.png. Path: " + resourcePath + ". Cek struktur folder.");
+            // Hentikan eksekusi atau gunakan fallback
+            return;
+        }
+
+        Image heartImage = new Image(resourceUrl.toExternalForm());
+        
         for (int i = 0; i < lifeSystem.getLife(); i++) {
-            ImageView heart = new ImageView(new Image(
-                    getClass().getResource("/assets/img/nyawa.png").toExternalForm()
-            ));
+            ImageView heart = new ImageView(heartImage);
             heart.setFitWidth(35);
             heart.setPreserveRatio(true);
             heartBox.getChildren().add(heart);

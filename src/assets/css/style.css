@@ -106,7 +106,8 @@
 /*JAWABAN (RadioButton tapi gaya seperti tombol)*/
 .answer-button {
     -fx-background-color: white;
-    -fx-padding: 5 10;
+    -fx-padding: 10 20;
+	-fx-alignment: center;
     -fx-border-color: black;
     -fx-border-width: 3;
     -fx-background-radius: 10px;
@@ -115,15 +116,33 @@
     -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-font-family: "Arial";
+	-fx-min-width: 300px;
 }
 
 .answer-button:hover {
     -fx-background-color: #e5e5e5;
 }
 
-/* menghilangkan bulatan radio default */
-.radio-button > .radio {
-    -fx-opacity: 0;
+/* Gaya saat RadioButton benar-benar di-toggle (opsional, tapi disarankan) */
+.answer-button:selected {
+    /* Warna ini bisa sama dengan .answer-selected atau sedikit berbeda */
+    -fx-background-color: #5cb85c;
+    -fx-text-fill: white;
+}
+
+.radio-button {
+    /* Aturan dasar yang menargetkan seluruh kontrol RadioButton */
+    -fx-label-padding: 0 0 0 0; /* Hapus padding antara dot dan teks */
+}
+
+.radio-button .radio {
+    /* Target elemen grafis yang berupa lingkaran atau kotak radio */
+    -fx-padding: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+    -fx-shape: none; /* Hilangkan bentuk dasarnya */
+    visibility: hidden; /* Sembunyikan elemen secara total */
 }
 
 /*NEXT BUTTON*/
@@ -141,5 +160,5 @@
 }
 
 .next-button:hover {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #5cb85c;
 }

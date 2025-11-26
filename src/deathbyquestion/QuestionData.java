@@ -220,9 +220,9 @@ public class QuestionData {
     // ================================
     public static List<Question> getQuestions() {
         List<Question> all = new ArrayList<>();
-        all.addAll(getAlgoritmaQuestions());
         all.addAll(getStrukturDataQuestions());
         all.addAll(getPemrogramanWebQuestions());
+        all.addAll(getAlgoritmaQuestions());
         return all;
     }
 }

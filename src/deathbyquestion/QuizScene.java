@@ -87,8 +87,6 @@ public class QuizScene {
             // **PERUBAHAN 2: Tambahkan listener untuk perubahan warna opsi yang dipilih**
             options[i].selectedProperty().addListener((obs, wasSelected, isSelected) -> {
                 
-                // Hapus kelas CSS dari semua opsi (untuk menghapus warna hijau opsi sebelumnya)
-                // Hapus kelas CSS ini dulu, karena Anda ingin hanya satu yang hijau
                 for (RadioButton rb : options) {
                     rb.getStyleClass().remove("answer-selected");
                 }
@@ -127,7 +125,6 @@ public class QuizScene {
                     if (options[i] == selected) selectedIndex = i;
                 }
                 
-                // Hapus warna hijau setelah tombol Next ditekan
                 selected.getStyleClass().remove("answer-selected");
 
                 if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
@@ -137,8 +134,10 @@ public class QuizScene {
                     updateHearts();
 
                     if (lifeSystem.isDead()) {
-                        System.out.println("Game Over!");
-                        // Tambahkan navigasi ke Game Over Scene di sini
+                        int finalScore = this.score;
+                    	int totalQuestion = questions.size();
+                        ResultScene resultScene = new ResultScene(stage, finalScore, totalQuestion);
+                        stage.setScene(resultScene.getScene());
                         return;
                     }
                 }
@@ -150,7 +149,9 @@ public class QuizScene {
                     showQuestion(questionLabel, options);
                     group.selectToggle(null);
                 } else {
-                    ResultScene resultScene = new ResultScene(stage, score, questions.size());
+                	int finalScore = this.score;
+                	int totalQuestion = questions.size();
+                    ResultScene resultScene = new ResultScene(stage, finalScore, totalQuestion);
                     stage.setScene(resultScene.getScene());
                 }
             }

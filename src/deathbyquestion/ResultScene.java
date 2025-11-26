@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 public class ResultScene {
     private Scene scene;
 
-    public ResultScene(Stage stage, int score, int total) {
+    public ResultScene(Stage stage, int score, int quizsize) {
         VBox layout = new VBox(15);
         layout.setAlignment(Pos.CENTER);
 
-        Label result = new Label("Skor kamu: " + score + " dari " + total);
+        Label result = new Label("Skor kamu: " + score + " dari " + quizsize);
         Button restart = new Button("Main lagi");
         restart.setOnAction(e -> {
             QuizScene quiz = new QuizScene(stage);

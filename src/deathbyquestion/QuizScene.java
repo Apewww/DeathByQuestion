@@ -30,12 +30,13 @@ public class QuizScene {
     private HBox heartBox;
     private Label levelLabel;
 
-    public QuizScene(Stage stage) {
+    public QuizScene(Stage stage, List<Question> questions) {
         this.stage = stage;
-        this.questions = QuestionData.getQuestions();
-        lifeSystem = new LifeSystem(3);
+        this.questions = questions; // hanya 10 soal dari tema yang dipilih!
+        this.lifeSystem = new LifeSystem(3);
         this.scene = createScene();
     }
+
 
     private Scene createScene() {
         /*TOPHUD*/

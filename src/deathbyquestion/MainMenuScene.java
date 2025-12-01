@@ -37,6 +37,7 @@ public class MainMenuScene {
         Button startButton = new Button("");
         Button achievementButton = new Button("	");
         Button exitButton = new Button("");
+        Button resultButton = new Button("result");
 
         startButton.setPrefSize(250, 60);
         startButton.getStyleClass().add("game-button");
@@ -44,15 +45,23 @@ public class MainMenuScene {
         achievementButton.getStyleClass().add("achievement-button");
         exitButton.setPrefSize(80, 20);
         exitButton.getStyleClass().add("exit-button");
+        resultButton.setPrefSize(80, 80);
+        resultButton.getStyleClass().add("cepat-result");
 
         startButton.setOnAction(e -> {
-            QuizScene quizScene = new QuizScene(stage);
-            stage.setScene(quizScene.getScene());
+            ThemeSelectionScene themeScene = new ThemeSelectionScene(stage);
+            stage.setScene(themeScene.getScene());
+        });
+
+        
+        resultButton.setOnAction(e -> {
+        	ResultScene resultScene = new ResultScene(stage, 0, 0);
+        	stage.setScene(resultScene.getScene());
         });
 
         exitButton.setOnAction(e -> stage.close());
 
-        mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton);
+        mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton, resultButton);
 
         StackPane root = new StackPane(mainLayout);
 

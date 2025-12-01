@@ -18,7 +18,7 @@ public class ResultScene {
         Label result = new Label("Skor kamu: " + score + " dari " + quizsize);
         result.getStyleClass().add("score-result");
         Button restartButton = new Button(" ");
-        restartButton.setPrefSize(100, 40);
+        restartButton.setPrefSize(250, 90);
         restartButton.getStyleClass().add("restart-button");
         restartButton.setOnAction(e -> {
         	MainMenuScene MainMenu = new MainMenuScene(stage);

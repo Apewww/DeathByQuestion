@@ -71,6 +71,55 @@
     -fx-scale-y: 1.05;
     -fx-cursor: hand;
 }
+
+
+/*-------------------------------------------------------------------*/
+/*theme*/
+/* Background */
+.selection-background {
+    -fx-background-color: linear-gradient(to bottom, #6EC1F3, #020617);
+}
+
+/* Title */
+.selection-title {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.selection-subtitle {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 30 0;
+}
+
+/* Card */
+.mode-card {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(255,255,255,0.15);
+    -fx-cursor: hand;
+}
+
+.mode-card:hover {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: #38BDF8;
+    -fx-translate-y: -6;
+}
+
+/* Card Text */
+.card-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.card-desc {
+    -fx-text-fill: #CBD5E1;
+    -fx-font-size: 13px;
+}
+
 /*-------------------------------------------------------------------*/
 
 /*BACKGROUND QUIZ SCENE*/
@@ -173,8 +222,14 @@
 }
 
 .score-result {
-	-fx-text-fill: white;
+    -fx-text-fill: white;
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0.4, 2, 2);
+    -fx-font-family: "Poppins";
+	-fx-padding: 120 0 80 0;
 }
+
 /*restart button*/
 .restart-button {
     -fx-background-color: transparent;

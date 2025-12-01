@@ -162,3 +162,32 @@
 .next-button:hover {
     -fx-background-color: #5cb85c;
 }
+
+
+/*result*/
+.result-background {
+    -fx-background-image: url("../img/bgresult.png");
+    -fx-background-size: cover;       /* agar full layar */
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.score-result {
+	-fx-text-fill: white;
+}
+/*restart button*/
+.restart-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../img/mainmenu.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.restart-button:hover {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 15, 0.4, 0, 4);
+    -fx-cursor: hand;
+    -fx-opacity: 0.9;   /* efek hover */
+}
+

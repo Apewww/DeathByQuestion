@@ -25,6 +25,7 @@ public class QuizScene {
     private int score = 0;
     private List<Question> questions;
     private LifeSystem lifeSystem;
+    private final int MAX_LIFE = 3; 	
 
     private HBox heartBox;
     private Label levelLabel;
@@ -191,25 +192,32 @@ public class QuizScene {
     /*heart*/
     private void updateHearts() {
         heartBox.getChildren().clear();
-        String resourcePath = "/assets/img/nyawa.png";
-        URL resourceUrl = getClass().getResource(resourcePath);
 
-        if (resourceUrl == null) {
-            // Ini untuk menangani NullPointerException yang terjadi sebelumnya
-            System.err.println("Gagal memuat nyawa.png. Path: " + resourcePath + ". Cek struktur folder.");
-            // Hentikan eksekusi atau gunakan fallback
-            return;
-        }
-
-        Image heartImage = new Image(resourceUrl.toExternalForm());
+        // Gambar hati penuh
+        Image fullHeart = new Image(getClass().getResource("/assets/img/lifepoint.png").toExternalForm());
         
-        for (int i = 0; i < lifeSystem.getLife(); i++) {
-            ImageView heart = new ImageView(heartImage);
-            heart.setFitWidth(35);
-            heart.setPreserveRatio(true);
-            heartBox.getChildren().add(heart);
+        // Gambar hati kosong / hitam
+        Image emptyHeart = new Image(getClass().getResource("/assets/img/lifeheart.png").toExternalForm());
+
+        int currentLife = lifeSystem.getLife(); // nyawa saat ini, misal 2 dari 3
+
+        for (int i = 0; i < MAX_LIFE; i++) {
+            ImageView heartView;
+
+            if (i < currentLife) {
+                // Hati masih penuh
+                heartView = new ImageView(fullHeart);
+            } else {
+                // Hati hilang → pakai gambar kosong/hitam
+                heartView = new ImageView(emptyHeart);
+            }
+
+            heartView.setFitWidth(35);
+            heartView.setPreserveRatio(true);
+            heartBox.getChildren().add(heartView);
         }
     }
+
 
     /*menampilkan question*/
     private void showQuestion(Label label, RadioButton[] options) {

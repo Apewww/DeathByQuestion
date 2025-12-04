@@ -28,7 +28,7 @@ public class MainMenuScene {
 
         // Logo
         ImageView logo = new ImageView(
-                new Image(getClass().getResource("/assets/img/logonew.png").toExternalForm())
+                new Image(getClass().getResource("/assets/img/logobaru.png").toExternalForm())
         );
         logo.setFitWidth(500);
         logo.setPreserveRatio(true);

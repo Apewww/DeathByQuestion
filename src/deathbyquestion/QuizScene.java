@@ -163,7 +163,10 @@ public class QuizScene {
         Button exitButton = new Button("Exit");
         exitButton.setPrefSize(80, 30);
         exitButton.getStyleClass().add("exit-button");
-        exitButton.setOnAction(e -> stage.close());
+        exitButton.setOnAction(e -> {
+        	MainMenuScene MainMenu = new MainMenuScene(stage);
+        	stage.setScene(MainMenu.getScene());
+        });
 
         /*space lines*/
         VBox.setMargin(topHUD, new Insets(0)); // Hapus margin di sini karena padding sudah ada di topHUD

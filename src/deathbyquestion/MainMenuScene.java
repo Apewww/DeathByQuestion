@@ -75,7 +75,7 @@ public class MainMenuScene {
         });
 
         mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton, resultButton);
-        return new Scene(new StackPane(mainLayout), 1000, 600);
+        return new Scene(new StackPane(mainLayout), Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
     }
 
     private Button createImageButton(String imgPath, double w, double h) {

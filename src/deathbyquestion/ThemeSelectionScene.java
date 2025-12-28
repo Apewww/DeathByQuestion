@@ -64,7 +64,7 @@ public class ThemeSelectionScene {
         layout.setPadding(new Insets(40));
         layout.setStyle("-fx-background-color: linear-gradient(to bottom, #6EC1F3, #020617);");
 
-        scene = new Scene(layout, 900, 500);
+        scene = new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
         return scene;
     }
 

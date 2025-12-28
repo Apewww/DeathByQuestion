@@ -147,7 +147,7 @@ public class QuizScene {
         layout.getChildren().addAll(topHUD, questionLabel, optionsGrid, nextButton, exitButton);
         showQuestion(questionLabel, options);
 
-        return new Scene(layout, 900, 500);
+        return new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
     }
 
     private void updateHearts() {

@@ -102,7 +102,7 @@ public class ResultScene {
 
         layout.getChildren().addAll(imageBox, result, restartButton);
 
-        this.scene = new Scene(layout, 600, 400);
+        scene = new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
     }
 
     public Scene getScene() {

@@ -1,237 +1,179 @@
 package deathbyquestion;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region; // Diperlukan untuk space lines
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.geometry.Insets;
 
-import java.net.URL; // Diperlukan untuk pengecekan resource
 import java.util.List;
 
 public class QuizScene {
+
     private Stage stage;
     private Scene scene;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private List<Question> questions;
     private LifeSystem lifeSystem;
-    private final int MAX_LIFE = 3; 	
+    private final int MAX_LIFE = 3;
 
     private HBox heartBox;
     private Label levelLabel;
 
     public QuizScene(Stage stage, List<Question> questions) {
         this.stage = stage;
-        this.questions = questions; // hanya 10 soal dari tema yang dipilih!
-        this.lifeSystem = new LifeSystem(3);
+        this.questions = questions;
+        this.lifeSystem = new LifeSystem(MAX_LIFE);
+
         this.scene = createScene();
+
+        // Putar musik quiz setelah scene dibuat
+        MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.QUIZ);
     }
 
-
     private Scene createScene() {
-        /*TOPHUD*/
         levelLabel = new Label("LEVEL " + (currentQuestionIndex + 1));
-        levelLabel.getStyleClass().add("level-label");
+        levelLabel.setFont(Font.font(24));
+        levelLabel.setTextFill(Color.BLACK);
 
         ImageView logoView = new ImageView(new Image(
                 getClass().getResource("/assets/img/logo.png").toExternalForm()
         ));
-        logoView.setFitWidth(150);
+        logoView.setFitWidth(120);
         logoView.setPreserveRatio(true);
 
-        // **PERUBAHAN 1: HBox untuk heartBox dibuat lebih lebar**
         heartBox = new HBox(5);
         heartBox.setAlignment(Pos.CENTER_RIGHT);
-        heartBox.setMinWidth(120); // Beri lebar minimal agar layout tidak bergeser
+        heartBox.setMinWidth(120);
         updateHearts();
 
-        // Gunakan Region sebagai 'Spacer' untuk responsif
         Region spacerLeft = new Region();
         HBox.setHgrow(spacerLeft, Priority.ALWAYS);
         Region spacerRight = new Region();
         HBox.setHgrow(spacerRight, Priority.ALWAYS);
 
-        // HBox dengan spacer agar levelLabel di kiri dan heartBox di kanan
         HBox topHUD = new HBox(10, levelLabel, spacerLeft, logoView, spacerRight, heartBox);
         topHUD.setAlignment(Pos.CENTER_LEFT);
-        topHUD.setPadding(new Insets(20, 30, 0, 30)); // Tambahkan padding untuk estetika
+        topHUD.setPadding(new Insets(20, 30, 0, 30));
 
-        /*Layout Utama*/
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(15);
         layout.setAlignment(Pos.TOP_CENTER);
-        layout.setPadding(new Insets(0));
-        layout.getStyleClass().add("quiz-background");
+        layout.setPadding(new Insets(10));
+        layout.setStyle("-fx-background-color: #8bb0c9;");
 
-        /*Question*/
         Label questionLabel = new Label();
-        questionLabel.getStyleClass().add("question-text");
+        questionLabel.setFont(Font.font(20));
+        questionLabel.setTextFill(Color.WHITE);
+        questionLabel.setWrapText(true);
+        questionLabel.setAlignment(Pos.CENTER);
 
-        /*Answer*/
         ToggleGroup group = new ToggleGroup();
         RadioButton[] options = new RadioButton[4];
-
         for (int i = 0; i < 4; i++) {
-            final int index = i; // Variabel 'index' adalah effectively final
+            final int index = i;
             options[i] = new RadioButton();
             options[i].setToggleGroup(group);
-            options[i].getStyleClass().add("answer-button");
-            
-            // **PERUBAHAN 2: Tambahkan listener untuk perubahan warna opsi yang dipilih**
-            options[i].selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-                
-                for (RadioButton rb : options) {
-                    rb.getStyleClass().remove("answer-selected");
-                }
-                
-                // Tambahkan kelas CSS ke opsi yang baru dipilih
-                if (isSelected) {
-                    options[index].getStyleClass().add("answer-selected"); // <<< GANTI i menjadi index
+            options[i].setFont(Font.font(14));
+            options[i].setTextFill(Color.BLACK);
+            options[i].setStyle("-fx-background-color: white; -fx-padding: 8 15; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 8;");
+
+            options[i].selectedProperty().addListener((obs, oldV, newV) -> {
+                for (RadioButton rb : options)
+                    rb.setStyle("-fx-background-color: white; -fx-padding: 8 15; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 8;");
+                if (newV) {
+                    options[index].setStyle("-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-padding: 8 15; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 8;");
                 }
             });
         }
 
-        /*option grid 3x2 - Dibuat lebih responsif*/
-        VBox col1 = new VBox(20, options[0], options[2]);
-        HBox.setHgrow(col1, Priority.ALWAYS);
+        VBox col1 = new VBox(15, options[0], options[2]);
         col1.setAlignment(Pos.CENTER_RIGHT);
-
-        VBox col2 = new VBox(20, options[1], options[3]);
-        HBox.setHgrow(col2, Priority.ALWAYS);
+        VBox col2 = new VBox(15, options[1], options[3]);
         col2.setAlignment(Pos.CENTER_LEFT);
 
-        // Grid 2 kolom utama
-        HBox optionsGrid = new HBox(50, col1, col2);
-        HBox.setHgrow(optionsGrid, Priority.ALWAYS);
+        HBox optionsGrid = new HBox(30, col1, col2);
         optionsGrid.setAlignment(Pos.CENTER);
         optionsGrid.setPadding(new Insets(0, 50, 0, 50));
 
-        /*next*/
         Button nextButton = new Button("Next");
-        nextButton.getStyleClass().add("next-button");
+        nextButton.setFont(Font.font(16));
+        nextButton.setStyle("-fx-background-color: #ffffff; -fx-border-color: black; -fx-border-width: 2; -fx-padding: 5 12; -fx-background-radius: 8; -fx-border-radius: 8;");
 
         nextButton.setOnAction(e -> {
             RadioButton selected = (RadioButton) group.getSelectedToggle();
             if (selected != null) {
                 int selectedIndex = -1;
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 4; i++)
                     if (options[i] == selected) selectedIndex = i;
-                }
-                
-                selected.getStyleClass().remove("answer-selected");
 
                 if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
                     score++;
                 } else {
                     lifeSystem.loseLife(1);
                     updateHearts();
-
                     if (lifeSystem.isDead()) {
-                        int finalScore = this.score;
-                    	int totalQuestion = questions.size();
-                        ResultScene resultScene = new ResultScene(stage, finalScore, totalQuestion);
-                        stage.setScene(resultScene.getScene());
+                        MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.RESULT);
+                        stage.setScene(new ResultScene(stage, score, questions.size()).getScene());
                         return;
                     }
                 }
 
                 currentQuestionIndex++;
-
                 if (currentQuestionIndex < questions.size()) {
                     levelLabel.setText("LEVEL " + (currentQuestionIndex + 1));
                     showQuestion(questionLabel, options);
                     group.selectToggle(null);
                 } else {
-                	int finalScore = this.score;
-                	int totalQuestion = questions.size();
-                    ResultScene resultScene = new ResultScene(stage, finalScore, totalQuestion);
-                    stage.setScene(resultScene.getScene());
+                    MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.RESULT);
+                    stage.setScene(new ResultScene(stage, score, questions.size()).getScene());
                 }
             }
         });
 
-        /*exit*/
         Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(80, 30);
-        exitButton.getStyleClass().add("exit-button");
+        exitButton.setFont(Font.font(14));
         exitButton.setOnAction(e -> {
-        	MainMenuScene MainMenu = new MainMenuScene(stage);
-        	stage.setScene(MainMenu.getScene());
+            MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.MAIN_MENU);
+            MainMenuScene menu = new MainMenuScene(stage);
+            stage.setScene(menu.getScene());
         });
 
-        /*space lines*/
-        VBox.setMargin(topHUD, new Insets(0)); // Hapus margin di sini karena padding sudah ada di topHUD
-        VBox.setMargin(questionLabel, new Insets(0, 0, 50, 0)); // Tambahkan margin atas untuk pertanyaan
-        VBox.setMargin(optionsGrid, new Insets(0, 0, 20, 0));
-        VBox.setMargin(nextButton, new Insets(0, 0, 20, 0));
-
-        /*tambah ke layout*/
-        layout.getChildren().addAll(
-                topHUD,
-                questionLabel,
-                optionsGrid,
-                nextButton,
-                exitButton
-        );
-
+        layout.getChildren().addAll(topHUD, questionLabel, optionsGrid, nextButton, exitButton);
         showQuestion(questionLabel, options);
 
-        Scene scene = new Scene(layout, 900, 500);
-        scene.getStylesheets().add(
-                getClass().getResource("/assets/css/style.css").toExternalForm()
-        );
-
-        return scene;
+        return new Scene(layout, 900, 500);
     }
 
-    /*heart*/
     private void updateHearts() {
         heartBox.getChildren().clear();
-
-        // Gambar hati penuh
         Image fullHeart = new Image(getClass().getResource("/assets/img/lifepoint.png").toExternalForm());
-        
-        // Gambar hati kosong / hitam
         Image emptyHeart = new Image(getClass().getResource("/assets/img/lifeheart.png").toExternalForm());
 
-        int currentLife = lifeSystem.getLife(); // nyawa saat ini, misal 2 dari 3
-
+        int currentLife = lifeSystem.getLife();
         for (int i = 0; i < MAX_LIFE; i++) {
-            ImageView heartView;
-
-            if (i < currentLife) {
-                // Hati masih penuh
-                heartView = new ImageView(fullHeart);
-            } else {
-                // Hati hilang → pakai gambar kosong/hitam
-                heartView = new ImageView(emptyHeart);
-            }
-
-            heartView.setFitWidth(35);
+            ImageView heartView = new ImageView(i < currentLife ? fullHeart : emptyHeart);
+            heartView.setFitWidth(30);
             heartView.setPreserveRatio(true);
             heartBox.getChildren().add(heartView);
         }
     }
 
-
-    /*menampilkan question*/
     private void showQuestion(Label label, RadioButton[] options) {
+        if (questions == null || questions.isEmpty() || currentQuestionIndex >= questions.size()) {
+            label.setText("Tidak ada pertanyaan");
+            for (RadioButton rb : options) rb.setDisable(true);
+            return;
+        }
         Question q = questions.get(currentQuestionIndex);
         label.setText(q.getQuestion());
-
         String[] opts = q.getOptions();
-        for (int i = 0; i < 4; i++) {
-            options[i].setText(opts[i]);
-        }
+        for (int i = 0; i < 4; i++) options[i].setText(opts[i]);
     }
 
     public Scene getScene() {

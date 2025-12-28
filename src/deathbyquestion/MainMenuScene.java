@@ -25,7 +25,7 @@ public class MainMenuScene {
     }
 
     private Scene createScene() {
-        VBox mainLayout = new VBox(30);
+        VBox mainLayout = new VBox(50);
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.setPadding(new Insets(40));
 

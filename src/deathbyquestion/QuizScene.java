@@ -1,9 +1,11 @@
 package deathbyquestion;
 
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -38,50 +40,64 @@ public class QuizScene {
     }
 
     private Scene createScene() {
+        // === LEVEL LABEL ===
         levelLabel = new Label("LEVEL " + (currentQuestionIndex + 1));
-        levelLabel.setFont(Font.font(24));
         levelLabel.setTextFill(Color.BLACK);
+        levelLabel.fontProperty().bind(Bindings.createObjectBinding(
+                () -> Font.font(stage.getHeight() * 0.04), stage.heightProperty()));
 
+        // === LOGO ===
         ImageView logoView = new ImageView(new Image(
                 getClass().getResource("/assets/img/logo.png").toExternalForm()
         ));
-        logoView.setFitWidth(120);
         logoView.setPreserveRatio(true);
+        logoView.fitWidthProperty().bind(stage.widthProperty().multiply(0.15));
 
+        // === HEARTS ===
         heartBox = new HBox(5);
         heartBox.setAlignment(Pos.CENTER_RIGHT);
         heartBox.setMinWidth(120);
         updateHearts();
 
+        // === SPACER ===
         Region spacerLeft = new Region();
         HBox.setHgrow(spacerLeft, Priority.ALWAYS);
         Region spacerRight = new Region();
         HBox.setHgrow(spacerRight, Priority.ALWAYS);
 
+        // === TOP HUD ===
         HBox topHUD = new HBox(10, levelLabel, spacerLeft, logoView, spacerRight, heartBox);
         topHUD.setAlignment(Pos.CENTER_LEFT);
-        topHUD.setPadding(new Insets(20, 30, 0, 30));
+        topHUD.paddingProperty().bind(Bindings.createObjectBinding(
+                () -> new Insets(stage.getHeight() * 0.03, stage.getWidth() * 0.04, 0, stage.getWidth() * 0.04),
+                stage.widthProperty(), stage.heightProperty()
+        ));
 
-        VBox layout = new VBox(15);
+        // === LAYOUT UTAMA ===
+        VBox layout = new VBox(50);
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10));
         layout.setStyle("-fx-background-color: #8bb0c9;");
 
+        // === QUESTION LABEL ===
         Label questionLabel = new Label();
-        questionLabel.setFont(Font.font(20));
         questionLabel.setTextFill(Color.WHITE);
         questionLabel.setWrapText(true);
         questionLabel.setAlignment(Pos.CENTER);
+        questionLabel.fontProperty().bind(Bindings.createObjectBinding(
+                () -> Font.font(stage.getHeight() * 0.03), stage.heightProperty()));
 
+        // === OPTIONS RADIOBUTTON ===
         ToggleGroup group = new ToggleGroup();
         RadioButton[] options = new RadioButton[4];
         for (int i = 0; i < 4; i++) {
             final int index = i;
             options[i] = new RadioButton();
             options[i].setToggleGroup(group);
-            options[i].setFont(Font.font(14));
             options[i].setTextFill(Color.BLACK);
             options[i].setStyle("-fx-background-color: white; -fx-padding: 8 15; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 8;");
+            options[i].fontProperty().bind(Bindings.createObjectBinding(
+                    () -> Font.font(stage.getHeight() * 0.02), stage.heightProperty()));
 
             options[i].selectedProperty().addListener((obs, oldV, newV) -> {
                 for (RadioButton rb : options)
@@ -101,9 +117,32 @@ public class QuizScene {
         optionsGrid.setAlignment(Pos.CENTER);
         optionsGrid.setPadding(new Insets(0, 50, 0, 50));
 
-        Button nextButton = new Button("Next");
-        nextButton.setFont(Font.font(16));
-        nextButton.setStyle("-fx-background-color: #ffffff; -fx-border-color: black; -fx-border-width: 2; -fx-padding: 5 12; -fx-background-radius: 8; -fx-border-radius: 8;");
+        // === NEXT BUTTON DENGAN IMAGE ===
+        Image nextImg = new Image(getClass().getResource("/assets/img/next.png").toExternalForm());
+        ImageView nextIcon = new ImageView(nextImg);
+        nextIcon.setPreserveRatio(true);
+        nextIcon.fitWidthProperty().bind(stage.widthProperty().multiply(0.07)); // 10% lebar stage
+
+        Button nextButton = new Button();
+        nextButton.setGraphic(nextIcon);
+        nextButton.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+
+        // === Hover effect Next ===
+        DropShadow hoverShadow = new DropShadow();
+        hoverShadow.setColor(Color.rgb(0, 0, 0, 0.6));
+        hoverShadow.setRadius(10);
+        hoverShadow.setSpread(0.3);
+
+        nextButton.setOnMouseEntered(e -> {
+            nextButton.setEffect(hoverShadow);
+            nextButton.setScaleX(1.05);
+            nextButton.setScaleY(1.05);
+        });
+        nextButton.setOnMouseExited(e -> {
+            nextButton.setEffect(null);
+            nextButton.setScaleX(1);
+            nextButton.setScaleY(1);
+        });
 
         nextButton.setOnAction(e -> {
             RadioButton selected = (RadioButton) group.getSelectedToggle();
@@ -136,15 +175,43 @@ public class QuizScene {
             }
         });
 
-        Button exitButton = new Button("Exit");
-        exitButton.setFont(Font.font(14));
+        // === EXIT BUTTON DENGAN IMAGE ===
+        Image exitImg = new Image(getClass().getResource("/assets/img/exit.png").toExternalForm());
+        ImageView exitIcon = new ImageView(exitImg);
+        exitIcon.setPreserveRatio(true);
+        exitIcon.fitWidthProperty().bind(stage.widthProperty().multiply(0.05));
+
+        Button exitButton = new Button();
+        exitButton.setGraphic(exitIcon);
+        exitButton.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+
+        // === Hover effect Exit ===
+        DropShadow exitShadow = new DropShadow();
+        exitShadow.setColor(Color.rgb(0, 0, 0, 0.6));
+        exitShadow.setRadius(10);
+        exitShadow.setSpread(0.3);
+
+        exitButton.setOnMouseEntered(e -> {
+            exitButton.setEffect(exitShadow);
+            exitButton.setScaleX(1.05);
+            exitButton.setScaleY(1.05);
+        });
+        exitButton.setOnMouseExited(e -> {
+            exitButton.setEffect(null);
+            exitButton.setScaleX(1);
+            exitButton.setScaleY(1);
+        });
+
         exitButton.setOnAction(e -> {
             MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.MAIN_MENU);
             MainMenuScene menu = new MainMenuScene(stage);
             stage.setScene(menu.getScene());
         });
 
+        // === TAMBAHKAN SEMUA KE LAYOUT ===
         layout.getChildren().addAll(topHUD, questionLabel, optionsGrid, nextButton, exitButton);
+
+        // Tampilkan pertanyaan pertama
         showQuestion(questionLabel, options);
 
         return new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
@@ -158,8 +225,8 @@ public class QuizScene {
         int currentLife = lifeSystem.getLife();
         for (int i = 0; i < MAX_LIFE; i++) {
             ImageView heartView = new ImageView(i < currentLife ? fullHeart : emptyHeart);
-            heartView.setFitWidth(30);
             heartView.setPreserveRatio(true);
+            heartView.fitWidthProperty().bind(stage.widthProperty().multiply(0.03));
             heartBox.getChildren().add(heartView);
         }
     }

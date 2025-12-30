@@ -12,7 +12,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import javafx.scene.layout.StackPane;
 import java.util.List;
 
 public class QuizScene {
@@ -150,10 +152,9 @@ public class QuizScene {
                 int selectedIndex = -1;
                 for (int i = 0; i < 4; i++)
                     if (options[i] == selected) selectedIndex = i;
-                
-                System.out.println(selectedIndex);
-                System.out.println(questions.get(currentQuestionIndex).getCorrectIndex());
-                if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
+
+                boolean correct = selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex();
+                if (correct) {
                     score++;
                 } else {
                     lifeSystem.loseLife(1);
@@ -165,17 +166,10 @@ public class QuizScene {
                     }
                 }
 
-                currentQuestionIndex++;
-                if (currentQuestionIndex < questions.size()) {
-                    levelLabel.setText("LEVEL " + (currentQuestionIndex + 1));
-                    showQuestion(questionLabel, options);
-                    group.selectToggle(null);
-                } else {
-                    MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.RESULT);
-                    stage.setScene(new ResultScene(stage, score, questions.size()).getScene());
-                }
+                showAnswerFeedback(correct);
             }
         });
+
 
         // === EXIT BUTTON DENGAN IMAGE ===
         Image exitImg = new Image(getClass().getResource("/assets/img/exit.png").toExternalForm());
@@ -215,10 +209,15 @@ public class QuizScene {
 
         // Tampilkan pertanyaan pertama
         showQuestion(questionLabel, options);
+        
+        StackPane root = new StackPane();
+        root.getChildren().add(layout); // VBox sebagai child
+        Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
-        return new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        //return new Scene(layout, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        return scene;
     }
-
+    
     private void updateHearts() {
         heartBox.getChildren().clear();
         Image fullHeart = new Image(getClass().getResource("/assets/img/lifepoint.png").toExternalForm());
@@ -244,6 +243,51 @@ public class QuizScene {
         String[] opts = q.getOptions();
         for (int i = 0; i < 4; i++) options[i].setText(opts[i]);
     }
+    
+    private void showAnswerFeedback(boolean correct) {
+        StackPane root = (StackPane) scene.getRoot(); 
+        Label feedback = new Label(correct ? "Jawaban Benar!" : "Jawaban Salah!");
+        feedback.setTextFill(Color.WHITE);
+        feedback.setFont(Font.font(24));
+        feedback.setStyle("-fx-background-color: " + (correct ? "#28a745" : "#dc3545") + "; -fx-padding: 20; -fx-alignment:center;");
+        feedback.prefWidthProperty().bind(scene.widthProperty());
+        feedback.setMaxWidth(Double.MAX_VALUE);
+        
+        StackPane.setAlignment(feedback, Pos.CENTER);
+        root.getChildren().add(feedback);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(e -> {
+            root.getChildren().remove(feedback);
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.size()) {
+                MusicManager.getInstance().playSceneMusic(MusicManager.SceneType.RESULT);
+                stage.setScene(new ResultScene(stage, score, questions.size()).getScene());
+            } else {
+                levelLabel.setText("LEVEL " + (currentQuestionIndex + 1));
+
+                VBox layout = (VBox) root.getChildren().get(0);
+                Label questionLabel = (Label) layout.getChildren().get(1); 
+                HBox optionsGrid = (HBox) layout.getChildren().get(2); 
+                RadioButton[] options = new RadioButton[4];
+                VBox col1 = (VBox) optionsGrid.getChildren().get(0);
+                VBox col2 = (VBox) optionsGrid.getChildren().get(1);
+                options[0] = (RadioButton) col1.getChildren().get(0);
+                options[2] = (RadioButton) col1.getChildren().get(1);
+                options[1] = (RadioButton) col2.getChildren().get(0);
+                options[3] = (RadioButton) col2.getChildren().get(1);
+
+                showQuestion(questionLabel, options);
+
+                // Reset toggle
+                for (RadioButton rb : options) rb.setSelected(false);
+            }
+        });
+        pause.play();
+    }
+
+
 
     public Scene getScene() {
         return scene;

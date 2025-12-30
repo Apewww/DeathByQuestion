@@ -4,7 +4,12 @@
       "question": "Apa itu algoritma?",
       "options": ["Bahasa pemrograman", "Langkah terstruktur", "Database", "Compiler"],
       "answer": 1
-    }
+    },
+	{
+	  "question": "Apa itu algoritma?",
+	  "options": ["Bahasa pemrograman", "Langkah terstruktur", "Database", "Compiler"],
+	  "answer": 1
+	}
   ],
   "struktur_data": [
     {

@@ -150,7 +150,9 @@ public class QuizScene {
                 int selectedIndex = -1;
                 for (int i = 0; i < 4; i++)
                     if (options[i] == selected) selectedIndex = i;
-
+                
+                System.out.println(selectedIndex);
+                System.out.println(questions.get(currentQuestionIndex).getCorrectIndex());
                 if (selectedIndex == questions.get(currentQuestionIndex).getCorrectIndex()) {
                     score++;
                 } else {

@@ -1,0 +1,23 @@
+{
+  "algoritma": [
+    {
+      "question": "Apa itu algoritma?",
+      "options": ["Bahasa pemrograman", "Langkah terstruktur", "Database", "Compiler"],
+      "answer": 1
+    }
+  ],
+  "struktur_data": [
+    {
+      "question": "Stack bekerja dengan prinsip?",
+      "options": ["FIFO", "LIFO", "Random", "Queue"],
+      "answer": 1
+    }
+  ],
+  "pemrograman_web": [
+    {
+      "question": "HTML digunakan untuk?",
+      "options": ["Logika", "Struktur halaman", "Database", "Server"],
+      "answer": 1
+    }
+  ]
+}

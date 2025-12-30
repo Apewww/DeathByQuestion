@@ -42,19 +42,19 @@ public class ThemeSelectionScene {
         VBox algoCard = createCard(
                 "Algoritma",
                 "Fokus ke logika pemecahan masalah dan langkah terstruktur",
-                () -> startQuiz(QuestionData.getAlgoritmaQuestions())
+                () -> startQuiz(QuestionLoader.getAlgoritmaQuestions())
         );
 
         VBox sdCard = createCard(
                 "Struktur Data",
                 "Pelajari stack, queue, tree, graph lewat kuis",
-                () -> startQuiz(QuestionData.getStrukturDataQuestions())
+                () -> startQuiz(QuestionLoader.getStrukturDataQuestions())
         );
 
         VBox webCard = createCard(
                 "Pemrograman Web",
                 "Front-end dan Back-end dasar",
-                () -> startQuiz(QuestionData.getPemrogramanWebQuestions())
+                () -> startQuiz(QuestionLoader.getPemrogramanWebQuestions())
         );
 
         cardContainer.getChildren().addAll(algoCard, sdCard, webCard);

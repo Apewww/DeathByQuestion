@@ -256,8 +256,8 @@ public class QuizScene {
         StackPane.setAlignment(feedback, Pos.CENTER);
         root.getChildren().add(feedback);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(e -> {
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> {	
             root.getChildren().remove(feedback);
 
             currentQuestionIndex++;

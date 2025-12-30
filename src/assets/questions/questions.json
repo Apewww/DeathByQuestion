@@ -5,24 +5,81 @@
       "options": ["Bahasa pemrograman", "Langkah terstruktur", "Database", "Compiler"],
       "answer": 1
     },
-	{
-	  "question": "Apa itu algoritma?",
-	  "options": ["Bahasa pemrograman", "Langkah terstruktur", "Database", "Compiler"],
-	  "answer": 1
-	}
+    {
+      "question": "Algoritma digunakan untuk?",
+      "options": ["Menjalankan hardware", "Menyusun langkah penyelesaian masalah", "Membuat desain grafis", "Mengelola jaringan"],
+      "answer": 1
+    },
+    {
+      "question": "Ciri utama algoritma yang baik adalah?",
+      "options": ["Ambigu", "Tidak berurutan", "Terstruktur dan jelas", "Sulit dipahami"],
+      "answer": 2
+    },
+    {
+      "question": "Algoritma biasanya dituliskan dalam bentuk?",
+      "options": ["Flowchart dan pseudocode", "HTML", "Database", "Query SQL"],
+      "answer": 0
+    },
+    {
+      "question": "C++ merupakan perkembangan dari bahasa?",
+      "options": ["C", "Python", "Java", "Rust"],
+      "answer": 0
+    }
   ],
+
   "struktur_data": [
     {
       "question": "Stack bekerja dengan prinsip?",
       "options": ["FIFO", "LIFO", "Random", "Queue"],
       "answer": 1
+    },
+    {
+      "question": "Queue bekerja dengan prinsip?",
+      "options": ["LIFO", "FIFO", "Stack", "Tree"],
+      "answer": 1
+    },
+    {
+      "question": "Struktur data yang menggunakan node dan cabang disebut?",
+      "options": ["Array", "Stack", "Tree", "Queue"],
+      "answer": 2
+    },
+    {
+      "question": "Struktur data yang menyimpan data secara berurutan adalah?",
+      "options": ["Graph", "Array", "Tree", "Set"],
+      "answer": 1
+    },
+    {
+      "question": "Linked List berbeda dari Array karena?",
+      "options": ["Ukuran tetap", "Menggunakan indeks", "Menggunakan pointer", "Tidak bisa dihapus"],
+      "answer": 2
     }
   ],
+
   "pemrograman_web": [
     {
       "question": "HTML digunakan untuk?",
-      "options": ["Logika", "Struktur halaman", "Database", "Server"],
+      "options": ["Logika program", "Struktur halaman", "Database", "Server"],
       "answer": 1
+    },
+    {
+      "question": "CSS berfungsi untuk?",
+      "options": ["Mengatur logika", "Mengatur tampilan", "Mengelola database", "Menjalankan server"],
+      "answer": 1
+    },
+    {
+      "question": "JavaScript digunakan untuk?",
+      "options": ["Struktur halaman", "Desain", "Interaksi dan logika", "Database"],
+      "answer": 2
+    },
+    {
+      "question": "Tag HTML untuk membuat link adalah?",
+      "options": ["<div>", "<a>", "<p>", "<span>"],
+      "answer": 1
+    },
+    {
+      "question": "Bahasa yang berjalan di sisi server adalah?",
+      "options": ["HTML", "CSS", "JavaScript", "PHP"],
+      "answer": 3
     }
   ]
 }

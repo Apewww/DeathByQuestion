@@ -55,18 +55,10 @@ public class MainMenuScene {
         Button startButton = createImageButton("/assets/img/start2.png", 250, 60);
         Button achievementButton = createImageButton("/assets/img/achiev.png", 150, 40);
         Button exitButton = createImageButton("/assets/img/exit.png", 80, 20);
-        Button resultButton = new Button("result");
-        resultButton.setPrefSize(80, 80);
 
         startButton.setOnAction(e -> {
             ThemeSelectionScene themeScene = new ThemeSelectionScene(stage);
             stage.setScene(themeScene.getScene());
-        });
-
-        resultButton.setOnAction(e -> {
-            MusicManager.getInstance().stop(); // stop sebelum masuk result
-            ResultScene resultScene = new ResultScene(stage, 0, 0);
-            stage.setScene(resultScene.getScene());
         });
 
         exitButton.setOnAction(e -> {
@@ -74,7 +66,7 @@ public class MainMenuScene {
             stage.close();
         });
 
-        mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton, resultButton);
+        mainLayout.getChildren().addAll(logo, startButton, achievementButton, exitButton);
         return new Scene(new StackPane(mainLayout), Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
     }
 

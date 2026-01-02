@@ -1,17 +1,22 @@
 package deathbyquestion;
 
-public class Question {
-    private String question;
-    private String[] options;
-    private int correctIndex;
+import java.util.List;
 
-    public Question(String question, String[] options, int correctIndex) {
-        this.question = question;
-        this.options = options;
-        this.correctIndex = correctIndex;
+public class Question {
+
+    private String question;
+    private List<String> options;
+    private int answer;
+
+    public String getQuestion() {
+        return question;
     }
 
-    public String getQuestion() { return question; }
-    public String[] getOptions() { return options; }
-    public int getCorrectIndex() { return correctIndex; }
+    public String[] getOptions() {
+        return options.toArray(new String[0]);
+    }
+
+    public int getCorrectIndex() {
+        return answer;
+    }
 }

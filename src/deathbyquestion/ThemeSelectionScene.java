@@ -1,0 +1,183 @@
+package deathbyquestion;
+
+import javafx.geometry.Insets;    
+import javafx.geometry.Pos;       
+import javafx.scene.Scene;        
+import javafx.scene.control.Label; 
+import javafx.scene.effect.DropShadow; 
+import javafx.scene.layout.HBox;  
+import javafx.scene.layout.VBox;  
+import javafx.scene.paint.Color;   
+import javafx.scene.text.Font;     
+import javafx.stage.Stage;         
+import java.util.List;          
+
+public class ThemeSelectionScene {
+
+    private Stage stage;
+    private Scene scene;
+
+    // Konstruktor
+    public ThemeSelectionScene(Stage stage) {
+        this.stage = stage;
+        this.scene = createScene(); 
+
+        // Memainkan musik yang sama dengan main menu
+        MusicManager.getInstance()
+                .playSceneMusic(MusicManager.SceneType.MAIN_MENU);
+    }
+
+    // Method untuk membuat tampilan scene
+    private Scene createScene() {
+
+        // Judul utama
+        Label title = new Label("Pilih Mode Game");
+        title.setFont(Font.font(28));
+        title.setTextFill(Color.WHITE);
+
+        // deskripsi
+        Label subtitle = new Label("Pilih kategori sebelum mulai bermain");
+        subtitle.setFont(Font.font(14));
+        subtitle.setTextFill(Color.LIGHTGRAY);
+
+        // Margin bawah subjudul
+        VBox.setMargin(subtitle, new Insets(0, 0, 30, 0));
+
+        // Container kartu (horizontal)
+        HBox cardContainer = new HBox(30);
+        cardContainer.setAlignment(Pos.CENTER);
+
+        // Kartu mode
+        VBox algoCard = createCard(
+                "Algoritma",
+                "Fokus ke logika pemecahan masalah dan langkah terstruktur",
+                () -> startQuiz(
+                        QuestionLoader.getAlgoritmaQuestions()
+                )
+        );
+
+        VBox sdCard = createCard(
+                "Struktur Data",
+                "Pelajari stack, queue, tree, graph lewat kuis",
+                () -> startQuiz(
+                        QuestionLoader.getStrukturDataQuestions()
+                )
+        );
+
+        VBox webCard = createCard(
+                "Pemrograman Web",
+                "Front-end dan Back-end dasar",
+                () -> startQuiz(
+                        QuestionLoader.getPemrogramanWebQuestions()
+                )
+        );
+
+        // Menambahkan semua kartu ke container
+        cardContainer.getChildren()
+                .addAll(algoCard, sdCard, webCard);
+
+        // Layout utama (vertikal)
+        VBox layout = new VBox(15, title, subtitle, cardContainer);
+        layout.setAlignment(Pos.TOP_CENTER);
+        layout.setPadding(new Insets(40));
+
+        layout.setStyle(
+                "-fx-background-color: linear-gradient(to bottom, #6EC1F3, #020617);"
+        );
+
+        // Membuat scene
+        scene = new Scene(
+                layout,
+                Constants.SCENE_WIDTH,
+                Constants.SCENE_HEIGHT
+        );
+
+        return scene;
+    }
+
+    // Method untuk membuat kartu mode game
+    private VBox createCard(
+            String titleText,
+            String descText,
+            Runnable action
+    ) {
+
+        // Judul kartu
+        Label title = new Label(titleText);
+        title.setFont(Font.font(18));
+        title.setTextFill(Color.WHITE);
+
+        // Deskripsi kartu
+        Label desc = new Label(descText);
+        desc.setWrapText(true); 
+        desc.setFont(Font.font(13));
+        desc.setTextFill(Color.LIGHTGRAY);
+
+        // Layout kartu
+        VBox card = new VBox(12, title, desc);
+        card.setAlignment(Pos.TOP_LEFT);
+        card.setPadding(new Insets(20));
+        card.setPrefSize(240, 170);
+
+        card.setStyle(
+                "-fx-background-color: rgba(255,255,255,0.05);" +
+                "-fx-background-radius: 16;" +
+                "-fx-border-radius: 16;" +
+                "-fx-border-color: rgba(255,255,255,0.15);"
+        );
+
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.AQUA);
+
+        card.setOnMouseEntered(e -> {
+            card.setStyle(
+                    "-fx-background-color: rgba(255,255,255,0.1);" +
+                    "-fx-background-radius: 16;" +
+                    "-fx-border-radius: 16;" +
+                    "-fx-border-color: #38BDF8;"
+            );
+            card.setTranslateY(-6); 
+            card.setEffect(shadow); 
+        });
+
+        card.setOnMouseExited(e -> {
+            card.setStyle(
+                    "-fx-background-color: rgba(255,255,255,0.05);" +
+                    "-fx-background-radius: 16;" +
+                    "-fx-border-radius: 16;" +
+                    "-fx-border-color: rgba(255,255,255,0.15);"
+            );
+            card.setTranslateY(0); 
+            card.setEffect(null);  
+        });
+
+        // Aksi saat kartu diklik
+        card.setOnMouseClicked(e -> action.run());
+
+        return card;
+    }
+
+    // Method untuk memulai quiz
+    private void startQuiz(List<Question> questions) {
+
+        // Validasi soal
+        if (questions == null || questions.isEmpty()) {
+            System.out.println("Error: Questions kosong!");
+            return;
+        }
+
+        // Menghentikan musik menu
+        MusicManager.getInstance().stop();
+
+        // Membuat scene quiz
+        QuizScene quiz = new QuizScene(stage, questions);
+
+        // Berpindah ke scene quiz
+        stage.setScene(quiz.getScene());
+    }
+
+    // Getter scene
+    public Scene getScene() {
+        return scene;
+    }
+}

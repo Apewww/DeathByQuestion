@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
+    // Method start 
     public void start(Stage primaryStage) {
         primaryStage.getIcons().addAll(
                 new javafx.scene.image.Image(
@@ -25,6 +26,7 @@ public class Main extends Application {
                     )
             );
         
+        // Inisialisasi scene menu utama dengan mengirimkan stage utama sebagai parameter
         MainMenuScene menu = new MainMenuScene(primaryStage);
 
         primaryStage.setTitle("Death By Question");
@@ -32,6 +34,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    // Method main standar Java 
     public static void main(String[] args) {
         launch(args);
     }

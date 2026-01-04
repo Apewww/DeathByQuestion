@@ -71,15 +71,13 @@ Program menggunakan class Question untuk menyimpan teks pertanyaan, daftar opsi 
 - Randomisasi pertanyaan
 - Mode tingkat kesulitan
 - Achievement
-- 
+
 ---
 
 ## Kontribusi
 
 Kontribusi sangat terbuka.  
 Silakan lakukan fork repository, buat branch baru, lalu ajukan pull request untuk perubahan atau penambahan fitur.
-
----
 
 ---
 

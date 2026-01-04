@@ -19,11 +19,17 @@ Aplikasi ini cocok digunakan sebagai media pembelajaran, latihan soal, maupun co
 ## Struktur Proyek
 
 DeathByQuestion/
+
 ├── src/
+
 │   └── deathbyquestion/
+
 │       ├── Question.java
+
 │       └── class pendukung lainnya
+
 ├── .gitignore
+
 └── README.md
 
 ---
@@ -62,12 +68,10 @@ Program menggunakan class Question untuk menyimpan teks pertanyaan, daftar opsi 
 
 ## Rencana Pengembangan
 
-- Sistem skor
 - Randomisasi pertanyaan
-- Penyimpanan soal dari file
-- Antarmuka GUI menggunakan JavaFX
 - Mode tingkat kesulitan
-
+- Achievement
+- 
 ---
 
 ## Kontribusi
@@ -76,11 +80,6 @@ Kontribusi sangat terbuka.
 Silakan lakukan fork repository, buat branch baru, lalu ajukan pull request untuk perubahan atau penambahan fitur.
 
 ---
-
-## Lisensi
-
-Belum ditentukan.  
-Silakan tambahkan file LICENSE sesuai kebutuhan.
 
 ---
 
